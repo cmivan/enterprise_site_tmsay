@@ -16,7 +16,7 @@
 |
 */
 
-$config['base_url']	= '/tmsay3/';
+$config['base_url']	= '/';
 
 
 /*

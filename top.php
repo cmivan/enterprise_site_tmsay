@@ -5,7 +5,7 @@
       <li style="border:0;"><a href="about.php">品牌简介</a></li>
       <li><a href="say.php">听木说论</a></li>
       <li><a href="products.php">产品目录</a></li>
-      <li><a href="feature.php">幕后花絮</a></li>
+      <li><a href="#">幕后花絮</a></li>
       <li><a href="buy.php">购买方式</a></li>
     </ul>
 <div id="share">

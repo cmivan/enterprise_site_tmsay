@@ -4,7 +4,7 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class System_into_pic_2 extends HT_Controller {
 	
-	public $rootpath = '/public/up/uploads/20120928/'; //$rootpath = '/public/up/uploads/20120813/';
+	public $rootpath = '/public/up/uploads/tms1011/'; //$rootpath = '/public/up/uploads/tms1011/';
 	
 	function __construct()
 	{
@@ -28,12 +28,13 @@ class System_into_pic_2 extends HT_Controller {
 	/* 分类目录/系列目录[/产品目录]/具体产品 */
 	function into()
 	{
-		$this->rootpath = '/public/up/uploads/20121007/';
+		$this->rootpath = '/public/up/uploads/tms1011/';
 		$path  = $this->rootpath . 'view/';
 		$pathB = $this->rootpath . 'big/';
 		$pathS = $this->rootpath . 'small/';
 		
 		$map = directory_map('.'.$path, FALSE, FALSE);
+		
 		foreach($map as $dir => $val)
 		{
 			$dir = mb_convert_encoding($dir, "UTF-8", "GB2312");
@@ -73,13 +74,15 @@ class System_into_pic_2 extends HT_Controller {
 					$da = array();
 					$da['styles_id'] = $styles_id;
 					
-					//大类---------------------------
+					//大类
 					$filekey = iconv("GB2312","utf-8",$filekey);
+					
 					//大类ID
 					$da['typeB_id'] = $this->getTypeB_Id($filekey);
 					if(is_numeric( $da['typeB_id'] ) && $da['typeB_id']!=0)
 					{
 						$this->out('<strong>发现大类:' . $filekey . '('.$da['typeB_id'].')</strong>');
+						
 						//修改大类文件夹
 						$typeBpath = $this->reIconv($xx2 . '/' . $filekey);
 						$typeBpathTo = $this->reIconv($xx2 . '/' . $da['typeB_id']);
@@ -100,6 +103,43 @@ class System_into_pic_2 extends HT_Controller {
 									$typeSpath = $this->reIconv($typeBpathTo . '/' . $valkey);
 									$typeSpathTo = $this->reIconv($typeBpathTo . '/' . $da['typeS_id']);
 									$this->rePath($typeSpath,$typeSpathTo);
+									
+/*									
+												//具体到图片
+												foreach($fileval as $filevalkey => $filename)
+												{
+													if($filename!='Thumbs.db')
+													{
+														$filePath = $typeSpathTo . '/' . $itemkey . '/';
+														$filePath = str_replace('./','/',$filePath);
+														
+														$da['title']   = $filename;
+
+														$fname= mb_convert_encoding($filename, "UTF-8", "GB2312");
+														$farr = explode('.',$fname);
+														if(is_array($farr)&&count($farr)==3)
+														{
+															//修改图片名称避免中文(view)
+															$filePath0 = $filePath . $filename;
+															$filePath2 = $filePath . md5($farr[0] . "." . $farr[1]) . '.jpg';
+															//rename('.'."$filePath0",'.'."$filePath2");
+															$this->rePath('.'."$filePath0",'.'."$filePath2");
+														}else{
+															$filePath2 = $filePath . $filename;
+														}
+														$da['content'] = '<img src="'.$filePath2.'" /><br>';
+														$da['filePath']= $filePath2;	
+													}
+												}
+												
+												$this->insertProduct($da);
+									
+									
+									*/
+									
+									
+									
+									
 		
 									//读取具体的文件
 									foreach($fileval as $itemkey => $item)
@@ -153,10 +193,10 @@ class System_into_pic_2 extends HT_Controller {
 
 												$fname= mb_convert_encoding($item, "UTF-8", "GB2312");
 												$farr = explode('.',$fname);
-												if(is_array($farr)&&count($farr)==3)
+												if(is_array($farr)&&count($farr)==2)
 												{
 													$ftitle = $farr[0] . "." . $farr[1];
-													$da['title'] = $ftitle;
+													$da['title'] = $farr[0];
 													//修改图片名称避免中文(view)
 													$filePath0 = $filePath . $item;
 													$filePath2 = $filePath . md5($ftitle) . '.jpg';
@@ -298,7 +338,8 @@ class System_into_pic_2 extends HT_Controller {
 				  'styles_id'=> $styles_id,
 				  'add_ip' => ip(),
 				  'hits' => 0,
-				  'order_id' => 0
+				  'order_id' => 0,
+				  'ok'=> 1
 				);
 				$this->db->insert('products',$rs);
 				$this->out('----< 添加 >----');
@@ -310,7 +351,8 @@ class System_into_pic_2 extends HT_Controller {
 					  'pic_s' => str_replace('view','small',$filePath),
 					  'typeB_id' => $typeB_id,
 					  'typeS_id' => $typeS_id,
-					  'styles_id'=> $styles_id
+					  'styles_id'=> $styles_id,
+					  'ok'=> 1
 					  );
 				$this->db->where('id',$itemID);
 				$this->db->update('products',$rs);
