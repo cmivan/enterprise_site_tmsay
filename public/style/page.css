@@ -1,0 +1,131 @@
+/**
+ * @fileoverview 基础
+ *
+ * @author cm.ivan
+ */
+body{
+	background:url(../images/body_bg.jpg) repeat-y center top;
+	}
+.pageBody{
+    overflow:hidden;
+	margin:auto;
+	margin-top:-15px;
+	width:988px;
+	background-color:#f9f9f9;
+	background:url(../images/pageMain_bg.jpg) repeat-y left top;
+	}
+.pageBody .pageTop{
+	margin-left:295px;
+	height:150px;
+	overflow:hidden;
+/*	background:url(../images/page_bg.jpg) no-repeat left top;*/
+	}
+.pageBody .pageMain{
+	
+	}
+.pageBody .pageMain .pageMainLeft{
+	float:left;
+	width:210px;
+	margin-left:50px;
+	}
+.pageBody .pageMain .pageMainLeft .leftNav{
+	margin-top:8px;
+	}
+.pageBody .pageMain .pageMainLeft .leftNav li a{
+	float:left;
+	padding-left:8px;
+	height:25px;
+	line-height:25px;
+	width:120px;
+	margin-bottom:5px;
+	color:#999;
+	font-weight:bold;
+	}
+.pageBody .pageMain .pageMainLeft .leftNav li a:hover{
+	color:#FFF;
+	background-color:#737578;
+	}
+.pageBody .pageMain .pageMainLeft .leftNav li a.on{
+	float:left;
+	padding-left:8px;
+	height:25px;
+	line-height:25px;
+	width:120px;
+	margin-bottom:5px;
+	font-weight:bold;
+	color:#FFF;
+	background-color:#737578;
+	}
+.pageBody .pageMain .pageMainRight{
+	float:right;
+	width:660px;
+	margin-right:50px;
+	clear:right;
+	}
+
+/*子页面，通用内容框*/
+#pageContent{
+	float: right;
+	position: relative;
+	width: 660px;
+	}
+#pageContent .content_header {
+width: 660px;
+height: 60px;
+}
+#pageContent .page_location {
+font-size: 11px;
+line-height: 12px;
+}
+#pageContent .page_location ol {
+float: right;
+padding-top: 7px;
+}
+#pageContent .page_location .home {
+padding-left: 18px;
+background: url(../images/ico/ico_home.gif) no-repeat 0 0;
+}
+#pageContent .page_location li {
+float: left;
+padding:0 4px 0 9px;
+margin-top:4px;
+background: url(../images/ico/ico_arrow.gif) no-repeat 0 3px;
+vertical-align: top;
+}
+#pageContent .page_location a:hover, #pageContent .page_location a:focus {
+text-decoration: underline;
+}
+#pageContent .page_location a {
+color: #b4a7a7;
+vertical-align: top;
+}
+#pageContent .page_location li:last-child a {
+color: #73513f;
+cursor:default;
+}
+#pageContent .page_location li:last-child a:hover{
+text-decoration:none;
+}
+	
+.pageBody .pageFooter{
+	clear:both;
+	height:110px;
+	background-image:url(../images/pageFooter_bg.jpg);
+	background-position:bottom left;
+	background-repeat:no-repeat;
+	}
+	
+
+
+/*页面底部*/
+.footer{
+	margin-top:80px;
+	padding-top:20px;
+	background-color:#FFF;
+	}
+.footer .footerBody{
+	width:988px;
+    height:120px;
+	margin:auto;
+	background-color:#C63;
+	}

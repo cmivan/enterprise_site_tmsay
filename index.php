@@ -1,209 +1,214 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset="utf-8">
-<title>听木说(tmsay.com)</title>
-<style type="text/css">
-<!--
-body {
-	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background: #fff;
-	margin: 0;
-	padding: 0;
-	color: #000;
-	font-size:12px;
-}
+<?php
 
-/* ~~ 元素/标签选择器 ~~ */
-ul, ol, dl { /* 由于浏览器之间的差异，最佳做法是在列表中将填充和边距都设置为零。为了保持一致，您可以在此处指定需要的数值，也可以在列表所包含的列表项（LI、DT 和 DD）中指定需要的数值。请注意，除非编写一个更为具体的选择器，否则您在此处进行的设置将会层叠到 .nav 列表。 */
-	padding: 0;
-	margin: 0;
-}
-h1, h2, h3, h4, h5, h6, p {
-	margin-top: 0;	 /* 删除上边距可以解决边距会超出其包含的 div 的问题。剩余的下边距可以使 div 与后面的任何元素保持一定距离。 */
-	padding-right: 15px;
-	padding-left: 15px; /* 向 div 内的元素侧边（而不是 div 自身）添加填充可避免使用任何方框模型数学。此外，也可将具有侧边填充的嵌套 div 用作替代方法。 */
-}
-img {
-	display:block;
-	}
-a img { /* 此选择器将删除某些浏览器中显示在图像周围的默认蓝色边框（当该图像包含在链接中时） */
-	border: none;
-}
 
-/* ~~ 站点链接的样式必须保持此顺序，包括用于创建悬停效果的选择器组在内。 ~~ */
-a:link {
-	color: #42413C;
-	text-decoration: underline; /* 除非将链接设置成极为独特的外观样式，否则最好提供下划线，以便可从视觉上快速识别 */
-}
-a:visited {
-	color: #6E6C64;
-	text-decoration: underline;
-}
-a:hover, a:active, a:focus { /* 此组选择器将为键盘导航者提供与鼠标使用者相同的悬停体验。 */
-	text-decoration: none;
-}
+/**
+ * set code
+ */
+ header("Content-Type:text/html; charset=utf-8");
+/**
+ * set time
+ */
+ date_default_timezone_set('PRC');
 
-/* ~~ 此固定宽度容器包含所有其它 div ~~ */
-.container {
-	width: 880px;
-	margin: 0 auto; /* 侧边的自动值与宽度结合使用，可以将布局居中对齐 */
-	overflow: hidden; /* 此声明可使 .container 了解其内部浮动列的结束位置以及包含列的位置 */
-}
+/*
+ *---------------------------------------------------------------
+ * APPLICATION ENVIRONMENT
+ *---------------------------------------------------------------
+ *
+ * You can load different configurations depending on your
+ * current environment. Setting the environment also influences
+ * things like logging and error reporting.
+ *
+ * This can be set to anything, but default usage is:
+ *
+ *     development
+ *     testing
+ *     production
+ *
+ * NOTE: If you change these, also change the error_reporting() code below
+ *
+ */
+	define('ENVIRONMENT', 'development');
+/*
+ *---------------------------------------------------------------
+ * ERROR REPORTING
+ *---------------------------------------------------------------
+ *
+ * Different environments will require different levels of error reporting.
+ * By default development will show errors but testing and live will hide them.
+ */
 
-/* ~~ 以下是此布局的列。 ~~ 
-
-1) 填充只会放置于 div 的顶部和/或底部。此 div 中的元素侧边会有填充。这样，您可以避免使用任何“方框模型数学”。请注意，如果向 div 自身添加任何侧边填充或边框，这些侧边填充或边框将与您定义的宽度相加，得出 *总计* 宽度。您也可以选择删除 div 中的元素的填充，并在该元素中另外放置一个没有任何宽度但具有设计所需填充的 div。
-
-2) 由于这些列均为浮动列，因此未对其指定边距。如果必须添加边距，请避免在浮动方向一侧放置边距（例如：div 中的右边距设置为向右浮动）。在很多情况下，都可以改用填充。对于必须打破此规则的 div，应向该 div 的规则中添加“display:inline”声明，以控制某些版本的 Internet Explorer 会使边距翻倍的错误。
-
-3) 由于可以在一个文档中多次使用类（并且一个元素可以应用多个类），因此已向这些列分配类名，而不是 ID。例如，必要时可堆叠两个侧栏 div。您可以根据个人偏好将这些名称轻松地改为 ID，前提是仅对每个文档使用一次。
-
-4) 如果您更喜欢在右侧（而不是左侧）进行导航，只需使这些列向相反方向浮动（全部向右，而非全部向左），它们将按相反顺序显示。您无需在 HTML 源文件中移动 div。
-
-*/
-.header {
-	float: left;
-	width: 880px;
-	padding-bottom: 25px;
-	margin-top:30px;
-}
-.header #logo {
-	width:300px;
-	height:130px;
-	margin-left:290px;
-	background-image:url(images/ico.jpg);
-	background-position:-30px -32px;
-	background-repeat:no-repeat;
-	}
-.header #logo a{
-	float:left;
-	overflow:hidden;
-	width:300px;
-	height:130px;
-	text-indent:-300px;
-	}
+if (defined('ENVIRONMENT'))
+{
+	switch (ENVIRONMENT)
+	{
+		case 'development':
+			error_reporting(E_ALL);
+		break;
 	
-.header #share {
-	float:right;
-	overflow:hidden;
-	width:150px;
-	height:28px;
+		case 'testing':
+		case 'production':
+			error_reporting(0);
+		break;
+
+		default:
+			exit('The application environment is not set correctly.');
 	}
-.header #share a{
-	float:left;
-	overflow:hidden;
-	text-indent:-300px;
-	width:28px;
-	height:28px;
-	margin-right:2px;
-	background-image:url(images/ico.jpg);
+}
+
+/*
+ *---------------------------------------------------------------
+ * SYSTEM FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * This variable must contain the name of your "system" folder.
+ * Include the path if the folder is not in the same  directory
+ * as this file.
+ *
+ */
+	$system_path = 'system';
+
+/*
+ *---------------------------------------------------------------
+ * APPLICATION FOLDER NAME
+ *---------------------------------------------------------------
+ *
+ * If you want this front controller to use a different "application"
+ * folder then the default one you can set its name here. The folder
+ * can also be renamed or relocated anywhere on your server.  If
+ * you do, use a full server path. For more info please see the user guide:
+ * http://codeigniter.com/user_guide/general/managing_apps.html
+ *
+ * NO TRAILING SLASH!
+ *
+ */
+	$application_folder = 'application';
+
+/*
+ * --------------------------------------------------------------------
+ * DEFAULT CONTROLLER
+ * --------------------------------------------------------------------
+ *
+ * Normally you will set your default controller in the routes.php file.
+ * You can, however, force a custom routing by hard-coding a
+ * specific controller class/function here.  For most applications, you
+ * WILL NOT set your routing here, but it's an option for those
+ * special instances where you might want to override the standard
+ * routing in a specific front controller that shares a common CI installation.
+ *
+ * IMPORTANT:  If you set the routing here, NO OTHER controller will be
+ * callable. In essence, this preference limits your application to ONE
+ * specific controller.  Leave the function name blank if you need
+ * to call functions dynamically via the URI.
+ *
+ * Un-comment the $routing array below to use this feature
+ *
+ */
+	// The directory name, relative to the "controllers" folder.  Leave blank
+	// if your controller is not in a sub-folder within the "controllers" folder
+	// $routing['directory'] = '';
+
+	// The controller class file name.  Example:  Mycontroller.php
+	// $routing['controller'] = '';
+
+	// The controller function you wish to be called.
+	// $routing['function']	= '';
+
+
+/*
+ * -------------------------------------------------------------------
+ *  CUSTOM CONFIG VALUES
+ * -------------------------------------------------------------------
+ *
+ * The $assign_to_config array below will be passed dynamically to the
+ * config class when initialized. This allows you to set custom config
+ * items or override any default config values found in the config.php file.
+ * This can be handy as it permits you to share one application between
+ * multiple front controller files, with each file containing different
+ * config values.
+ *
+ * Un-comment the $assign_to_config array below to use this feature
+ *
+ */
+	// $assign_to_config['name_of_config_item'] = 'value of config item';
+
+
+
+// --------------------------------------------------------------------
+// END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
+// --------------------------------------------------------------------
+
+/*
+ * ---------------------------------------------------------------
+ *  Resolve the system path for increased reliability
+ * ---------------------------------------------------------------
+ */
+
+	// Set the current directory correctly for CLI requests
+	if (defined('STDIN'))
+	{
+		chdir(dirname(__FILE__));
 	}
-.header #share a#qq{background-position:-2px 0;}
-.header #share a#weibo{background-position:-29px 0;}
-.header #share a#weixin{background-position:-54px 0;}
-.header #share a#taobao{background-position:-80px 0;}
 
-#top{
-	width:100%;
-	background-color:#FFF;
+	if (realpath($system_path) !== FALSE)
+	{
+		$system_path = realpath($system_path).'/';
 	}
-#main_body{
-	background-image:url(images/bg.jpg);
-	background-position:top center;
+
+	// ensure there's a trailing slash
+	$system_path = rtrim($system_path, '/').'/';
+
+	// Is the system path correct?
+	if ( ! is_dir($system_path))
+	{
+		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
 	}
-#footer{
-	width:100%;
-	height:150px;
-	background-color:#FFF;
+
+/*
+ * -------------------------------------------------------------------
+ *  Now that we know the path, set the main path constants
+ * -------------------------------------------------------------------
+ */
+	// The name of THIS file
+	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+
+	// The PHP file extension
+	define('EXT', '.php');
+
+	// Path to the system folder
+	define('BASEPATH', str_replace("\\", "/", $system_path));
+
+	// Path to the front controller (this file)
+	define('FCPATH', str_replace(SELF, '', __FILE__));
+
+	// Name of the "system folder"
+	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+
+
+	// The path to the "application" folder
+	if (is_dir($application_folder))
+	{
+		define('APPPATH', $application_folder.'/');
 	}
-.main_width{
-	width:880px;
-	margin:auto;
+	else
+	{
+		if ( ! is_dir(BASEPATH.$application_folder.'/'))
+		{
+			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+
+		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
-.content {
-	display:none;
-	width: 880px;
-	float: left;
-}
 
-/* ~~ 此分组的选择器为 .content 区域中的列表提供了空间 ~~ */
-.content ul, .content ol { 
-	padding: 0 15px 15px 40px; /* 此填充反映上述标题和段落规则中的右填充。填充放置于下方可用于间隔列表中其它元素，置于左侧可用于创建缩进。您可以根据需要进行调整。 */
-}
+/*
+ * --------------------------------------------------------------------
+ * LOAD THE BOOTSTRAP FILE
+ * --------------------------------------------------------------------
+ *
+ * And away we go...
+ *
+ */
+require_once BASEPATH.'core/CodeIgniter'.EXT;
 
-/* ~~ 导航列表样式（如果选择使用预先创建的 Spry 等弹出菜单，则可以删除此样式） ~~ */
-ul.nav {
-	margin:0;
-	padding:0;
-	float:left;
-	width:480px;
-	padding-left:213px;
-	margin-top:6px;
-	list-style: none; /* 这将删除列表标记 */
-}
-ul.nav li {
-	float:left;
-	text-align:center;
-	font-size:12px;
-	border-left:1px solid #CCC;
-}
-ul.nav a, ul.nav a:visited { /* 对这些选择器进行分组可确保链接即使在访问之后也能保持其按钮外观 */
-	padding: 1px 5px 1px 5px;
-	display: block; /* 这将为链接赋予块属性，使其填满包含它的整个 LI。这样，整个区域都可以响应鼠标单击操作。 */
-	width: 80px;  /*此宽度使整个按钮在 IE6 中可单击。如果您不需要支持 IE6，可以删除它。请用侧栏容器的宽度减去此链接的填充来计算正确的宽度。 */
-	text-decoration: none;
-}
-ul.nav a:hover, ul.nav a:active, ul.nav a:focus { /* 这将更改鼠标和键盘导航的背景和文本颜色 */
-	background: #000;
-	color: #FFF;
-}
-
-
-/* ~~ 其它浮动/清除类 ~~ */
-.fltrt {  /* 此类可用于在页面中使元素向右浮动。浮动元素必须位于其在页面上的相邻元素之前。 */
-	float: right;
-	margin-left: 8px;
-}
-.fltlft { /* 此类可用于在页面中使元素向左浮动。浮动元素必须位于其在页面上的相邻元素之前。 */
-	float: left;
-	margin-right: 8px;
-}
-.clearfloat { /* 如果从 .container 中删除了 overflow:hidden，则可以将此类放置在 <br /> 或空 div 中，作为 #container 内最后一个浮动 div 之后的最终元素 */
-	clear:both;
-	height:0;
-	font-size: 1px;
-	line-height: 0px;
-}
--->
-</style></head>
-
-<body>
-
-<div id="top">
-<div class="main_width">
-<div class="container">
-  <?php include('top.php');?>
-  
-  <div class="content">
-    <h1>&nbsp;</h1>
-    <p>请注意，这些布局的 CSS 带有大量注释。如果您的大部分工作都在设计视图中进行，请快速浏览一下代码，获取有关如何使用固定布局 CSS 的提示。您可以先删除这些注释，然后启动您的站点。要了解有关这些 CSS 布局中使用的方法的更多信息，请阅读 Adobe 开发人员中心上的以下文章：<a href=http://www.adobe.com/go/adc_css_layouts">http://www.adobe.com/go/adc_css_layouts</a>。您可以先删除这些注释，然后启动您的站点。若要了解有关这些 CSS 布局中使用的方法的更多信息，请阅读 Adobe 开发人员中心上的以下文章：<a href=http://www.adobe.com/go/adc_css_layouts">http://www.adobe.com/go/adc_css_layouts</a>。</p>
-    <h2>清除</h2>
-    <p>由于所有列都是浮动的，因此，此布局对 .container 采用 overflow:hidden。此清除方法强制使 .container 了解列的结束位置，以便显示在 .container 中放置的任何边框或背景颜色。如果有任何大型元素突出到 .container 以外，该元素在显示时将被截断。您也不能使用负边距或具有负值的绝对定位将元素拉至 .container 以外，这些元素同样不会在 .container 之外显示。</p>
-    <p>如果您需要使用这些属性，则需要采用其它清除方法。最可靠的方法是在最后一个浮动列之后（但在 .container 结束之前）添加 &lt;br class="clearfloat" /&gt; 或 &lt;div class="clearfloat"&gt;&lt;/div&gt;。这具有相同的清除效果。    <!-- end .content --></p>
-  </div>
-
-  
-
-  <!-- end .container --></div>
-</div>
-</div>
-
-<div id="main_body">
-<div class="main_width"><img src="images/tms_07.jpg" width="880" height="500"></div>
-</div>
-
-<?php include('footer.php');?>
-  
-</body>
-</html>
+/* End of file index.php */
+/* Location: ./index.php */
